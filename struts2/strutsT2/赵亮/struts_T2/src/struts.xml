@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+
+<struts>
+
+    <package name="rest-showcase" extends="struts-default" namespace="/">
+     <!-- 
+        创建自定义拦截器
+      -->
+     		<interceptors>
+     			<interceptor name="loginiterceptor" class="util.LoginIterceptor"></interceptor>
+     		</interceptors>
+      
+        <action name="Demo6_*" class="com.Action.Action1" method="{1}">
+        <!-- 
+        
+          配置自定义拦截器不对某些方法进行拦截
+         -->
+        <interceptor-ref name="loginiterceptor">
+        <param name="excludeMethods">login</param>
+        </interceptor-ref>
+        <interceptor-ref name="defaultStack"></interceptor-ref>
+        	<result name="red">/index.jsp</result>
+        	<result name="success">/Success.jsp</result>
+        	<allowed-methods>add,Success,login,execute</allowed-methods>
+        </action>
+        
+        <action name="Demo" class="com.Action.Action1" method="Success">
+            <result name="success"> /Success.jsp</result>
+        </action>
+        
+        
+    </package>
+</struts>
